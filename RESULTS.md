@@ -1,23 +1,12 @@
 # 최근 검색 결과
 
-마지막 검색: 2026-10-12 16:19 (KST)
+마지막 검색: 2026-10-12 16:25 (KST)
 
 
 ## 도쿄 11월
 
-14개 날짜 검색, 조건에 맞는 날짜 0개, 새 알림 0개, 실패 13개
+14개 날짜 검색, 조건에 맞는 날짜 0개, 새 알림 0개
 
 
-<details><summary>실패 내역</summary>
+가격 빼고 조건에 맞는 현재 최저가: **305,700원** (2026-11-21 ~ 2026-11-25, 에어프레미아, ICN 13:55 → NRT 16:30 · 직항 · 비행 2시간 35분) [구글](https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMjEoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTI1KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW)
 
-- 2026-11-15 2026-11-18: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-15 2026-11-19: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-16 2026-11-19: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-16 2026-11-20: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-17 2026-11-20: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-17 2026-11-21: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-18 2026-11-21: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-18 2026-11-22: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-19 2026-11-22: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-- 2026-11-19 2026-11-23: 구글 응답을 읽지 못함 (페이지 제목: '서울특별시발 도쿄도행 | Google 항공편 검색'): IndexError('list index out of range')
-</details>
