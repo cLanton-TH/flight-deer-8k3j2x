@@ -28,7 +28,7 @@ alerts:
     depart_from: 2026-11-15
     depart_to: 2026-11-21
     nights: [3, 4]
-    max_price: 300000
+    max_price: 350000
     adults: 1
     checked_bags: 1
     max_stops: 0
