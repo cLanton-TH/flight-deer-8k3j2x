@@ -1,19 +1,27 @@
 {
  "alerts": [
   {
-   "name": "도쿄 11월",
+   "name": "도쿄 1월",
    "origin": "ICN",
    "destination": "NRT",
    "trip": "round-trip",
-   "window_from": "2026-11-15",
-   "window_to": "2026-11-25",
-   "trip_days": [4, 5],
+   "window_from": "2026-12-26",
+   "window_to": "2027-01-31",
+   "trip_days": [
+    4
+   ],
    "max_price": 350000,
-   "adults": 1,
+   "adults": 4,
    "baggage": "checked",
    "max_stops": 0,
-   "depart_hours": [7, 20],
-   "return_hours": null,
+   "depart_hours": [
+    7,
+    13
+   ],
+   "return_hours": [
+    12,
+    19
+   ],
    "airlines": [],
    "seat": "economy",
    "active": true
