@@ -14,8 +14,10 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 import yaml
-from fast_flights import FlightQuery, FlightsNotFound, Passengers, create_query, fetch_flights_html
-from fast_flights.parser import parse
+from fast_flights import FlightQuery, Passengers, create_query, fetch_flights_html
+from fast_flights.model import Airport, Flights, SimpleDatetime, SingleFlight
+from fast_flights.parser import _parse_time
+from selectolax.lexbor import LexborHTMLParser
 
 ROOT = Path(__file__).parent
 STATE = ROOT / "state.json"
@@ -92,21 +94,52 @@ def build_query(a, dep, ret):
     )
 
 
+def parse(html):
+    """구글 항공편 페이지의 데이터(ds:1)에서 항공편 목록을 꺼냄.
+
+    fast-flights 기본 파서는 '추천 항공편'(payload[2])을 빼먹고, 가격이 없는 항목이 있으면 통째로 실패해서
+    두 목록을 모두 읽고 가격 없는 항목은 건너뛰도록 직접 파싱한다.
+    """
+    script = LexborHTMLParser(html).css_first(r"script.ds\:1")
+    if script is None:
+        raise ValueError("ds:1 데이터 없음")
+    data = script.text().split("data:", 1)[1].rsplit(",", 1)[0]
+    if data.endswith("errorHasStatus: true"):
+        return []
+    payload = json.loads(data)
+    flights = []
+    for section in (payload[2], payload[3]):
+        for k in (section or [None])[0] or []:
+            try:
+                price = k[1][0][1] if k[1] and k[1][0] else None
+                if not price:
+                    continue
+                f = k[0]
+                segs = [SingleFlight(
+                    from_airport=Airport(code=s[3], name=s[4]), to_airport=Airport(code=s[6], name=s[5]),
+                    departure=SimpleDatetime(date=tuple(s[20]), time=_parse_time(s[8])),
+                    arrival=SimpleDatetime(date=tuple(s[21]), time=_parse_time(s[10])),
+                    duration=s[11], plane_type=s[17],
+                ) for s in f[2]]
+                flights.append(Flights(type=f[0], price=price, airlines=f[1], flights=segs, carbon=None))
+            except (IndexError, TypeError):
+                continue
+    return flights
+
+
 def search(q):
     """검색 결과 목록을 돌려줌. 결과 없음은 [], 차단·오류는 예외."""
     html = fetch_flights_html(q)
     try:
         return parse(html)
-    except FlightsNotFound:
-        return []
     except Exception as e:
         title = html.split("<title>", 1)[-1].split("</title>", 1)[0][:80] if "<title>" in html else html[:80]
         raise RuntimeError(f"구글 응답을 읽지 못함 (페이지 제목: {title!r}): {e!r}") from e
 
 
-def matches(a, f):
+def matches(a, f, check_price=True):
     """구글 필터가 느슨하게 적용될 때를 대비해 한 번 더 확인."""
-    if not f.price or f.price > a["max_price"]:
+    if check_price and f.price > a["max_price"]:
         return False
     if a["max_stops"] is not None and len(f.flights) - 1 > a["max_stops"]:
         return False
@@ -175,7 +208,7 @@ def run_alert(a, state):
     combos = date_combos(a)
     skipped = max(0, len(combos) - MAX_COMBOS)
     combos = combos[:MAX_COMBOS]
-    found, errors = [], []
+    found, errors, cheapest = [], [], None  # cheapest: 가격 외 조건은 맞는 최저가 (참고용)
     for i, (dep, ret) in enumerate(combos):
         if i:
             time.sleep(random.uniform(2, 5))
@@ -186,7 +219,13 @@ def run_alert(a, state):
             errors.append(f"{dep} {ret or ''}: {e}")
             print(f"  실패 {dep} {ret or ''}: {e}")
             continue
-        ok = [f for f in flights if matches(a, f)]
+        near = [f for f in flights if matches(a, f, check_price=False)]
+        if near:
+            b = min(near, key=lambda f: f.price)
+            if cheapest is None or b.price < cheapest["price"]:
+                cheapest = {"dep": dep, "ret": ret, "price": b.price, "airlines": ", ".join(b.airlines),
+                            "detail": describe(b), "link": q.url()}
+        ok = [f for f in near if f.price <= a["max_price"]]
         print(f"  {dep}~{ret or ''}: 결과 {len(flights)}개, 조건 일치 {len(ok)}개")
         if ok:
             best = min(ok, key=lambda f: f.price)
@@ -206,7 +245,8 @@ def run_alert(a, state):
             del notified[key]
     if new:
         notify(a, new)
-    return {"combos": len(combos), "skipped": skipped, "found": found, "new": len(new), "errors": errors}
+    return {"combos": len(combos), "skipped": skipped, "found": found, "new": len(new), "errors": errors,
+            "cheapest": cheapest}
 
 
 def write_results(summary):
@@ -217,6 +257,10 @@ def write_results(summary):
         out.append(f"{s['combos']}개 날짜 검색, 조건에 맞는 날짜 {len(s['found'])}개, 새 알림 {s['new']}개"
                    + (f", 실패 {len(s['errors'])}개" if s["errors"] else "")
                    + (f" (조합이 많아 {s['skipped']}개 생략)" if s["skipped"] else "") + "\n")
+        c = s["cheapest"]
+        if c:
+            when = f"{c['dep']}" + (f" ~ {c['ret']}" if c["ret"] else "")
+            out.append(f"\n가격 빼고 조건에 맞는 현재 최저가: **{c['price']:,}원** ({when}, {c['airlines']}, {c['detail']}) [구글]({c['link']})\n")
         if s["found"]:
             out.append("\n| 날짜 | 가격 | 항공사 | 항공편 | 링크 |\n|---|---|---|---|---|")
             for r in sorted(s["found"], key=lambda r: r["price"]):
