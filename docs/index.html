@@ -135,6 +135,7 @@ function comboCount(a) {
 }
 
 function won(n) { return Number(n).toLocaleString('ko-KR') + '원'; }
+function priceText(f) { return f.total && f.total !== f.price ? `1인 ${won(f.price)} (총 ${won(f.total)})` : won(f.price); }
 
 function render() {
   const list = document.getElementById('list');
@@ -161,7 +162,7 @@ function render() {
       <div class="chips">${DAYS.map(d => `<span class="chip ${(a.trip_days||[]).includes(d)?'on':''}" onclick="toggleDay(${i},${d})">${d}일</span>`).join('')}</div>`}
       <p class="muted">검색할 날짜 조합 ${n}개${loop}</p>
       <div class="row">
-        <div><label>최대 가격 (총액)</label><input type="number" inputmode="numeric" step="10000" value="${a.max_price}" oninput="setv(${i},'max_price',+this.value)"></div>
+        <div><label>최대 가격 (1인당)</label><input type="number" inputmode="numeric" step="10000" value="${a.max_price}" oninput="setv(${i},'max_price',+this.value)"></div>
         <div><label>인원</label><select onchange="setv(${i},'adults',+this.value)">${[1,2,3,4,5,6].map(x=>opt(x,`성인 ${x}명`,a.adults||1)).join('')}</select></div>
       </div>
       <div class="row">
@@ -191,10 +192,10 @@ function render() {
 function resultHtml(r) {
   if (!r) return '<div class="res muted">아직 검색 결과가 없어요.</div>';
   let h = '<div class="res">';
-  if (r.cheapest) h += `가격 빼고 조건에 맞는 현재 최저가: <b>${won(r.cheapest.price)}</b> (${r.cheapest.dep}${r.cheapest.ret?' ~ '+r.cheapest.ret:''}, ${esc(r.cheapest.airlines)}) <a href="${r.cheapest.link}" target="_blank">구글</a>`;
+  if (r.cheapest) h += `가격 빼고 조건에 맞는 현재 최저가: <b>${priceText(r.cheapest)}</b> (${r.cheapest.dep}${r.cheapest.ret?' ~ '+r.cheapest.ret:''}, ${esc(r.cheapest.airlines)}) <a href="${r.cheapest.link}" target="_blank">구글</a>`;
   else h += '<span class="muted">조건에 맞는 항공편이 없어요.</span>';
   if (r.found && r.found.length) {
-    h += '<ul>' + r.found.map(f => `<li><b>${won(f.price)}</b> ${f.dep}${f.ret?' ~ '+f.ret:''} ${esc(f.airlines)}<br><span class="muted">${esc(f.detail)}</span> <a href="${f.link}" target="_blank">구글</a> · <a href="${f.naver}" target="_blank">네이버</a></li>`).join('') + '</ul>';
+    h += '<ul>' + r.found.map(f => `<li><b>${priceText(f)}</b> ${f.dep}${f.ret?' ~ '+f.ret:''} ${esc(f.airlines)}<br><span class="muted">${esc(f.detail)}</span> <a href="${f.link}" target="_blank">구글</a> · <a href="${f.naver}" target="_blank">네이버</a></li>`).join('') + '</ul>';
   }
   h += `<div class="muted">이번 검색 ${r.searched}개${r.pending?`, 다음 차례 ${r.pending}개`:''}${r.errors?`, 실패 ${r.errors}개`:''}</div></div>`;
   return h;

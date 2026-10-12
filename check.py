@@ -59,7 +59,7 @@ def normalize(raw):
         "window_from": to_date(raw["window_from"]),
         "window_to": to_date(raw["window_to"]),
         "trip_days": sorted({int(d) for d in raw.get("trip_days") or [3]}),
-        "max_price": int(raw["max_price"]),
+        "max_price": int(raw["max_price"]),  # 1인당 가격 기준
         "adults": int(raw.get("adults", 1)),
         "carry_on_bags": carry,
         "checked_bags": checked,
@@ -205,14 +205,20 @@ def send(title, body, click=None):
     return sent
 
 
+def won(a, r):
+    if a["adults"] > 1:
+        return f"1인 {r['price']:,}원 (총 {r['total']:,}원)"
+    return f"{r['price']:,}원"
+
+
 def notify(a, rows):
     rows = sorted(rows, key=lambda r: r["price"])[:5]
     lines = []
     for r in rows:
         when = f"{r['dep']:%m/%d}" + (f"~{r['ret']:%m/%d}" if r["ret"] else "")
-        lines.append(f"• {when}  {r['price']:,}원  {r['airlines']}\n  {r['detail']}\n"
+        lines.append(f"• {when}  {won(a, r)}  {r['airlines']}\n  {r['detail']}\n"
                      f"  구글: {r['link']}\n  네이버: {r['naver']}")
-    title = f"✈ {a['name']}: {a['origin']}→{a['destination']} {rows[0]['price']:,}원부터"
+    title = f"✈ {a['name']}: {a['origin']}→{a['destination']} {'1인 ' if a['adults'] > 1 else ''}{rows[0]['price']:,}원부터"
     send(title, "\n\n".join(lines), click=rows[0]["link"])
 
 
@@ -235,17 +241,19 @@ def run_alert(a, state):
             errors.append(f"{dep} {ret or ''}: {e}")
             print(f"  실패 {dep} {ret or ''}: {e}")
             continue
+        for f in flights:  # 구글 가격은 전체 인원 총액이라 1인당으로 바꿔서 비교
+            f.total, f.price = f.price, round(f.price / a["adults"])
         near = [f for f in flights if matches(a, f, check_price=False)]
         if near:
             b = min(near, key=lambda f: f.price)
             if cheapest is None or b.price < cheapest["price"]:
-                cheapest = {"dep": dep, "ret": ret, "price": b.price, "airlines": ", ".join(b.airlines),
+                cheapest = {"dep": dep, "ret": ret, "price": b.price, "total": b.total, "airlines": ", ".join(b.airlines),
                             "detail": describe(b), "link": q.url()}
         ok = [f for f in near if f.price <= a["max_price"]]
         print(f"  {dep}~{ret or ''}: 결과 {len(flights)}개, 조건 일치 {len(ok)}개")
         if ok:
             best = min(ok, key=lambda f: f.price)
-            found.append({"dep": dep, "ret": ret, "price": best.price, "airlines": ", ".join(best.airlines),
+            found.append({"dep": dep, "ret": ret, "price": best.price, "total": best.total, "airlines": ", ".join(best.airlines),
                           "detail": describe(best), "link": q.url(), "naver": naver_link(a, dep, ret)})
 
     # 처음 발견했거나 이전에 알린 가격보다 싸진 것만 알림
