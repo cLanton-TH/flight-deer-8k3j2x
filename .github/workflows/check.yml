@@ -1,0 +1,56 @@
+name: 항공권 검색
+
+on:
+  schedule:
+    - cron: "17 * * * *"   # 매시간 17분 (UTC 기준, 정각은 GitHub가 붐벼서 피함)
+  push:
+    paths: ["alerts.yaml"] # 조건을 고치면 바로 한 번 검색
+  workflow_dispatch:
+    inputs:
+      test_notify:
+        description: "검색 대신 테스트 알림만 보내기"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: flight-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TZ: Asia/Seoul
+      NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+      NTFY_SERVER: ${{ secrets.NTFY_SERVER }}
+      TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: 테스트 알림
+        if: ${{ inputs.test_notify }}
+        run: python check.py --test-notify
+
+      - name: 검색
+        if: ${{ !inputs.test_notify }}
+        run: python check.py
+
+      - name: 결과 저장 (알림 기록, RESULTS.md)
+        if: ${{ !inputs.test_notify && always() }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state.json RESULTS.md || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "검색 결과 업데이트"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 5; done
