@@ -1,0 +1,74 @@
+{
+ "updated": "2026-10-12 16:37",
+ "alerts": {
+  "도쿄 11월": {
+   "searched": 15,
+   "pending": 0,
+   "errors": 0,
+   "cheapest": {
+    "dep": "2026-11-21",
+    "ret": "2026-11-25",
+    "price": 305700,
+    "airlines": "에어프레미아",
+    "detail": "ICN 13:55 → NRT 16:30 · 직항 · 비행 2시간 35분",
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMjEoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTI1KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW"
+   },
+   "found": [
+    {
+     "dep": "2026-11-21",
+     "ret": "2026-11-25",
+     "price": 305700,
+     "airlines": "에어프레미아",
+     "detail": "ICN 13:55 → NRT 16:30 · 직항 · 비행 2시간 35분",
+     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMjEoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTI1KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW",
+     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20261121/NRT-ICN-20261125?adult=1&fareType=Y"
+    },
+    {
+     "dep": "2026-11-16",
+     "ret": "2026-11-19",
+     "price": 306200,
+     "airlines": "에어서울",
+     "detail": "ICN 08:10 → NRT 10:25 · 직항 · 비행 2시간 15분",
+     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMTYoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTE5KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW",
+     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20261116/NRT-ICN-20261119?adult=1&fareType=Y"
+    },
+    {
+     "dep": "2026-11-15",
+     "ret": "2026-11-18",
+     "price": 314000,
+     "airlines": "에티오피아항공",
+     "detail": "ICN 16:50 → NRT 19:20 · 직항 · 비행 2시간 30분",
+     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMTUoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTE4KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW",
+     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20261115/NRT-ICN-20261118?adult=1&fareType=Y"
+    },
+    {
+     "dep": "2026-11-20",
+     "ret": "2026-11-24",
+     "price": 316200,
+     "airlines": "에어서울",
+     "detail": "ICN 16:40 → NRT 19:00 · 직항 · 비행 2시간 20분",
+     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMjAoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTI0KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW",
+     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20261120/NRT-ICN-20261124?adult=1&fareType=Y"
+    },
+    {
+     "dep": "2026-11-22",
+     "ret": "2026-11-25",
+     "price": 316200,
+     "airlines": "에어서울",
+     "detail": "ICN 08:10 → NRT 10:25 · 직항 · 비행 2시간 15분",
+     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMjIoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTI1KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW",
+     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20261122/NRT-ICN-20261125?adult=1&fareType=Y"
+    },
+    {
+     "dep": "2026-11-21",
+     "ret": "2026-11-24",
+     "price": 320800,
+     "airlines": "피치항공",
+     "detail": "ICN 12:40 → NRT 15:15 · 직항 · 비행 2시간 35분",
+     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTEtMjEoAEAHSBRqBRIDSUNOcgUSA05SVBocEgoyMDI2LTExLTI0KABqBRIDTlJUcgUSA0lDTkIBAUgBagQQABgBiAEBmAEB&hl=ko&curr=KRW",
+     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20261121/NRT-ICN-20261124?adult=1&fareType=Y"
+    }
+   ]
+  }
+ }
+}
