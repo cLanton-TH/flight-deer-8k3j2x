@@ -1,4 +1,4 @@
-"""alerts.yaml의 조건으로 구글 항공권을 검색하고, 조건에 맞는 항공편이 새로 나오면 휴대폰으로 알림을 보냅니다.
+"""alerts.json의 조건으로 구글 항공권을 검색하고, 조건에 맞는 항공편이 새로 나오면 휴대폰으로 알림을 보냅니다.
 
 GitHub Actions에서 매시간 실행됩니다. 로컬 실행: pip install -r requirements.txt && python check.py
 알림 설정은 환경 변수: NTFY_TOPIC, NTFY_SERVER(선택), TELEGRAM_TOKEN, TELEGRAM_CHAT_ID
@@ -13,7 +13,6 @@ import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-import yaml
 from fast_flights import FlightQuery, Passengers, create_query, fetch_flights_html
 from fast_flights.model import Airport, Flights, SimpleDatetime, SingleFlight
 from fast_flights.parser import _parse_time
@@ -22,7 +21,11 @@ from selectolax.lexbor import LexborHTMLParser
 ROOT = Path(__file__).parent
 STATE = ROOT / "state.json"
 RESULTS = ROOT / "RESULTS.md"
-MAX_COMBOS = 40  # 알림 하나당 한 번에 검색할 날짜 조합 최대 개수 (구글 차단 방지)
+RESULTS_JSON = ROOT / "results.json"  # 휴대폰 설정 페이지가 읽음
+CONFIG = ROOT / "alerts.json"  # 휴대폰 설정 페이지가 저장함
+# 알림 하나당 한 번 실행에서 검색할 날짜 조합 최대 개수 (구글 차단 방지).
+# 조합이 더 많으면 다음 실행에서 이어서 검색하므로 몇 시간에 걸쳐 전체 범위를 한 바퀴 돈다.
+MAX_COMBOS = 60
 KST = timezone(timedelta(hours=9))
 DOMESTIC = {"GMP", "CJU", "PUS", "TAE", "CJJ", "KWJ", "RSU", "USN", "KPO", "MWX", "YNY", "HIN", "WJU", "KUV"}
 
@@ -39,39 +42,49 @@ def hours(v):
     return (v[0], v[1]) if v else (None, None)
 
 
+BAGGAGE = {"none": (0, 0), "carry": (1, 0), "checked": (0, 1), "checked2": (0, 2)}  # (기내, 위탁)
+
+
 def normalize(raw):
+    """alerts.json 항목 하나를 내부 형식으로 바꿈.
+
+    trip_days는 여행 일수(2박3일 = 3), window는 여행 전체가 들어가야 하는 기간(가는 날 ~ 오는 날).
+    """
+    carry, checked = BAGGAGE.get(raw.get("baggage", "none"), (0, 0))
     a = {
         "name": raw["name"],
-        "origin": raw["origin"].upper(),
-        "destination": raw["destination"].upper(),
+        "origin": raw["origin"].strip().upper(),
+        "destination": raw["destination"].strip().upper(),
         "trip": raw.get("trip", "round-trip"),
-        "depart_from": to_date(raw["depart_from"]),
-        "depart_to": to_date(raw.get("depart_to", raw["depart_from"])),
+        "window_from": to_date(raw["window_from"]),
+        "window_to": to_date(raw["window_to"]),
+        "trip_days": sorted({int(d) for d in raw.get("trip_days") or [3]}),
         "max_price": int(raw["max_price"]),
         "adults": int(raw.get("adults", 1)),
-        "checked_bags": int(raw.get("checked_bags", 0)),
-        "carry_on_bags": int(raw.get("carry_on_bags", 0)),
+        "carry_on_bags": carry,
+        "checked_bags": checked,
         "max_stops": raw.get("max_stops"),
-        "airlines": [str(x).upper() for x in raw.get("airlines") or []] or None,
+        "airlines": [str(x).strip().upper() for x in raw.get("airlines") or [] if str(x).strip()] or None,
         "seat": raw.get("seat", "economy"),
         "active": raw.get("active", True),
     }
-    nights = raw.get("nights") or [3, 3]
-    a["nights_min"], a["nights_max"] = int(nights[0]), int(nights[-1])
     a["dep_h_min"], a["dep_h_max"] = hours(raw.get("depart_hours"))
     a["ret_h_min"], a["ret_h_max"] = hours(raw.get("return_hours"))
     return a
 
 
 def date_combos(a):
+    """검색 기간 안에 여행 전체가 들어가는 (가는 날, 오는 날) 조합."""
     combos = []
-    d = max(a["depart_from"], today())
-    while d <= a["depart_to"]:
+    d = max(a["window_from"], today())
+    while d <= a["window_to"]:
         if a["trip"] == "one-way":
             combos.append((d, None))
         else:
-            for n in range(a["nights_min"], a["nights_max"] + 1):
-                combos.append((d, d + timedelta(days=n)))
+            for days in a["trip_days"]:
+                ret = d + timedelta(days=days - 1)
+                if ret <= a["window_to"]:
+                    combos.append((d, ret))
         d += timedelta(days=1)
     return combos
 
@@ -207,11 +220,14 @@ def notify(a, rows):
 def run_alert(a, state):
     combos = date_combos(a)
     skipped = max(0, len(combos) - MAX_COMBOS)
-    combos = combos[:MAX_COMBOS]
+    if skipped:  # 이번엔 cursor부터 MAX_COMBOS개, 다음 실행은 그 다음부터
+        cursor = state.setdefault("_cursor", {}).get(a["name"], 0) % len(combos)
+        combos = (combos[cursor:] + combos[:cursor])[:MAX_COMBOS]
+        state["_cursor"][a["name"]] = cursor + MAX_COMBOS
     found, errors, cheapest = [], [], None  # cheapest: 가격 외 조건은 맞는 최저가 (참고용)
     for i, (dep, ret) in enumerate(combos):
         if i:
-            time.sleep(random.uniform(2, 5))
+            time.sleep(random.uniform(1.5, 3.5))
         q = build_query(a, dep, ret)
         try:
             flights = search(q)
@@ -256,7 +272,7 @@ def write_results(summary):
         out.append(f"\n## {name}\n")
         out.append(f"{s['combos']}개 날짜 검색, 조건에 맞는 날짜 {len(s['found'])}개, 새 알림 {s['new']}개"
                    + (f", 실패 {len(s['errors'])}개" if s["errors"] else "")
-                   + (f" (조합이 많아 {s['skipped']}개 생략)" if s["skipped"] else "") + "\n")
+                   + (f" (전체 {s['combos'] + s['skipped']}개 중 이번에 {s['combos']}개, 나머지는 다음 실행에서)" if s["skipped"] else "") + "\n")
         c = s["cheapest"]
         if c:
             when = f"{c['dep']}" + (f" ~ {c['ret']}" if c["ret"] else "")
@@ -272,15 +288,27 @@ def write_results(summary):
     RESULTS.write_text("\n".join(out) + "\n", encoding="utf-8")
 
 
+def write_results_json(summary):
+    def row(r):
+        return r and {**r, "dep": str(r["dep"]), "ret": str(r["ret"]) if r["ret"] else None}
+    out = {"updated": datetime.now(KST).strftime("%Y-%m-%d %H:%M"), "alerts": {
+        name: {"searched": s["combos"], "pending": s["skipped"], "errors": len(s["errors"]),
+               "cheapest": row(s["cheapest"]),
+               "found": [row(r) for r in sorted(s["found"], key=lambda r: r["price"])[:10]]}
+        for name, s in summary.items()}}
+    RESULTS_JSON.write_text(json.dumps(out, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+
+
 def main():
     if "--test-notify" in sys.argv:
         send("✈ 테스트 알림", "항공권 알림이 잘 연결됐어요.", click="https://www.google.com/travel/flights")
         return
-    config = yaml.safe_load((ROOT / "alerts.yaml").read_text(encoding="utf-8")) or {}
+    config = json.loads(CONFIG.read_text(encoding="utf-8"))
     state = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {}
     alerts = [normalize(x) for x in config.get("alerts") or [] if x.get("active", True)]
     names = {a["name"] for a in alerts}
-    state = {k: v for k, v in state.items() if k in names}
+    state = {k: v for k, v in state.items() if k in names or k == "_cursor"}
+    state["_cursor"] = {k: v for k, v in state.get("_cursor", {}).items() if k in names}
 
     summary, total, failed = {}, 0, 0
     for a in alerts:
@@ -292,6 +320,7 @@ def main():
 
     STATE.write_text(json.dumps(state, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     write_results(summary)
+    write_results_json(summary)
     if total and failed == total:
         print("모든 검색이 실패했습니다. 구글이 요청을 막았을 수 있어요.")
         sys.exit(1)  # 워크플로를 실패로 표시해 GitHub가 메일로 알려주게 함

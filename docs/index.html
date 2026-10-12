@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>항공권 알림 설정</title>
+<style>
+  :root { color-scheme: light dark; --bg:#f6f7f9; --card:#fff; --line:#d9dce1; --muted:#6b7280; --accent:#2563eb; --ok:#15803d; --bad:#b91c1c; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#111317; --card:#1b1e24; --line:#333842; --muted:#9aa3af; --accent:#60a5fa; --ok:#4ade80; --bad:#f87171; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); font:16px/1.45 system-ui,-apple-system,sans-serif; }
+  main { max-width:640px; margin:0 auto; padding:12px 16px 80px; }
+  h1 { font-size:20px; margin:8px 0 12px; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:14px; }
+  label { display:block; font-size:13px; color:var(--muted); margin:10px 0 4px; }
+  input, select { width:100%; font-size:16px; padding:9px 10px; border:1px solid var(--line); border-radius:8px; background:transparent; color:inherit; }
+  .row { display:flex; gap:10px; } .row > * { flex:1; min-width:0; }
+  .chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .chip { border:1px solid var(--line); border-radius:999px; padding:6px 12px; font-size:15px; cursor:pointer; user-select:none; }
+  .chip.on { background:var(--accent); border-color:var(--accent); color:#fff; }
+  button { font-size:16px; padding:10px 14px; border-radius:8px; border:1px solid var(--line); background:transparent; color:inherit; cursor:pointer; }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+  .bar { position:fixed; left:0; right:0; bottom:0; background:var(--card); border-top:1px solid var(--line); padding:10px 16px; }
+  .bar div { max-width:640px; margin:0 auto; display:flex; gap:8px; align-items:center; }
+  .bar .primary { flex:1; }
+  .muted { color:var(--muted); font-size:13px; }
+  .msg { font-size:14px; margin:8px 0; } .ok { color:var(--ok); } .bad { color:var(--bad); }
+  .head { display:flex; justify-content:space-between; align-items:center; gap:8px; }
+  .head input { font-weight:600; }
+  .switch { display:flex; align-items:center; gap:6px; white-space:nowrap; font-size:14px; }
+  .switch input { width:auto; }
+  .res { margin-top:12px; padding-top:10px; border-top:1px dashed var(--line); font-size:14px; }
+  .res a { color:var(--accent); }
+  .res ul { padding-left:18px; margin:6px 0; }
+  details summary { cursor:pointer; }
+</style>
+</head>
+<body>
+<main>
+  <h1>✈ 항공권 알림 설정</h1>
+
+  <details class="card" id="setup">
+    <summary><b>연결 설정</b> <span class="muted" id="setupState"></span></summary>
+    <label>저장소 (아이디/저장소이름)</label>
+    <input id="repo" placeholder="cLanton-TH/flight-deer-8k3j2x">
+    <label>GitHub 토큰 (이 휴대폰 브라우저에만 저장돼요)</label>
+    <input id="token" type="password" placeholder="github_pat_...">
+    <p class="muted">GitHub → Settings → Developer settings → Fine-grained tokens에서 이 저장소만 선택하고 Contents 권한을 Read and write로 만든 토큰을 넣으세요.</p>
+    <button onclick="saveSetup()">연결</button>
+  </details>
+
+  <div id="msg" class="msg"></div>
+  <div id="list"></div>
+  <button onclick="addAlert()">+ 알림 추가</button>
+  <p class="muted" id="updated"></p>
+</main>
+<div class="bar"><div>
+  <button class="primary" onclick="save()">저장하고 바로 검색</button>
+  <button onclick="load()">새로고침</button>
+</div></div>
+
+<script>
+const DAYS = [2,3,4,5,6,7,8,9,10,14];
+const MAX_COMBOS = 60;
+let alerts = [], sha = null, results = {};
+
+function guessRepo() {
+  const m = location.hostname.match(/^([^.]+)\.github\.io$/);
+  const path = location.pathname.split('/').filter(Boolean)[0];
+  return m && path ? `${m[1]}/${path}` : '';
+}
+function getLS(k) { try { return localStorage.getItem(k) || ''; } catch { return ''; } }
+function setLS(k, v) { try { localStorage.setItem(k, v); } catch {} }
+const cfg = () => ({ repo: getLS('repo') || guessRepo(), token: getLS('token') });
+
+function msg(text, cls='') { const el = document.getElementById('msg'); el.textContent = text; el.className = 'msg ' + cls; }
+
+async function api(path, opts={}) {
+  const { repo, token } = cfg();
+  const res = await fetch(`https://api.github.com/repos/${repo}/${path}`, {
+    ...opts, cache: 'no-store',
+    headers: { 'Accept': 'application/vnd.github+json', ...(token ? { 'Authorization': `Bearer ${token}` } : {}), ...(opts.headers||{}) },
+  });
+  if (!res.ok) throw new Error(`${res.status} ${(await res.json().catch(()=>({}))).message || ''}`);
+  return res.json();
+}
+const b64decode = s => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\n/g,'')), c => c.charCodeAt(0)));
+const b64encode = s => { const b = new TextEncoder().encode(s); let out=''; b.forEach(x => out += String.fromCharCode(x)); return btoa(out); };
+
+function saveSetup() {
+  setLS('repo', document.getElementById('repo').value.trim());
+  setLS('token', document.getElementById('token').value.trim());
+  document.getElementById('setup').open = false;
+  load();
+}
+
+async function load() {
+  const { repo, token } = cfg();
+  document.getElementById('repo').value = repo;
+  document.getElementById('token').value = token;
+  document.getElementById('setupState').textContent = token ? '· 연결됨' : '· 토큰 필요';
+  if (!repo || !token) { document.getElementById('setup').open = true; msg('먼저 연결 설정을 해주세요.', 'bad'); return; }
+  msg('불러오는 중...');
+  try {
+    const f = await api('contents/alerts.json?ref=main');
+    sha = f.sha;
+    alerts = JSON.parse(b64decode(f.content)).alerts || [];
+    try {
+      const r = await api('contents/results.json?ref=main');
+      const data = JSON.parse(b64decode(r.content));
+      results = data.alerts || {};
+      document.getElementById('updated').textContent = `마지막 검색: ${data.updated}`;
+    } catch { results = {}; }
+    render(); msg('');
+  } catch (e) { msg('불러오기 실패: ' + e.message, 'bad'); }
+}
+
+function hourOptions(sel) {
+  let h = `<option value="">상관없음</option>`;
+  for (let i = 0; i < 24; i++) h += `<option value="${i}" ${sel===i?'selected':''}>${i}시</option>`;
+  return h;
+}
+function opt(v, label, cur) { return `<option value="${v}" ${String(cur)===String(v)?'selected':''}>${label}</option>`; }
+
+function comboCount(a) {
+  const from = new Date(a.window_from), to = new Date(a.window_to);
+  const today = new Date(); today.setHours(0,0,0,0);
+  const start = from < today ? today : from;
+  let n = 0;
+  for (let d = new Date(start); d <= to; d.setDate(d.getDate()+1)) {
+    if (a.trip === 'one-way') { n++; continue; }
+    for (const days of a.trip_days || []) { const r = new Date(d); r.setDate(r.getDate()+days-1); if (r <= to) n++; }
+  }
+  return n;
+}
+
+function won(n) { return Number(n).toLocaleString('ko-KR') + '원'; }
+
+function render() {
+  const list = document.getElementById('list');
+  list.innerHTML = alerts.map((a, i) => {
+    const r = results[a.name];
+    const n = comboCount(a);
+    const loop = n > MAX_COMBOS ? ` · 한 번에 ${MAX_COMBOS}개씩, 전체를 도는 데 약 ${Math.ceil(n/MAX_COMBOS)}시간` : '';
+    const dh = a.depart_hours || [null, null], rh = a.return_hours || [null, null];
+    return `<div class="card">
+      <div class="head">
+        <input value="${esc(a.name)}" oninput="setv(${i},'name',this.value)" placeholder="알림 이름">
+        <label class="switch"><input type="checkbox" ${a.active!==false?'checked':''} onchange="setv(${i},'active',this.checked)"> 켜짐</label>
+      </div>
+      <div class="row">
+        <div><label>출발 공항</label><input value="${esc(a.origin)}" oninput="setv(${i},'origin',this.value.toUpperCase())" placeholder="ICN"></div>
+        <div><label>도착 공항</label><input value="${esc(a.destination)}" oninput="setv(${i},'destination',this.value.toUpperCase())" placeholder="NRT"></div>
+        <div><label>여정</label><select onchange="setv(${i},'trip',this.value,true)">${opt('round-trip','왕복',a.trip)}${opt('one-way','편도',a.trip)}</select></div>
+      </div>
+      <div class="row">
+        <div><label>검색 기간 시작</label><input type="date" value="${a.window_from}" onchange="setv(${i},'window_from',this.value,true)"></div>
+        <div><label>검색 기간 끝</label><input type="date" value="${a.window_to}" onchange="setv(${i},'window_to',this.value,true)"></div>
+      </div>
+      ${a.trip==='one-way' ? '' : `<label>여행 일수 (여러 개 선택 가능, 2박3일 = 3일)</label>
+      <div class="chips">${DAYS.map(d => `<span class="chip ${(a.trip_days||[]).includes(d)?'on':''}" onclick="toggleDay(${i},${d})">${d}일</span>`).join('')}</div>`}
+      <p class="muted">검색할 날짜 조합 ${n}개${loop}</p>
+      <div class="row">
+        <div><label>최대 가격 (총액)</label><input type="number" inputmode="numeric" step="10000" value="${a.max_price}" oninput="setv(${i},'max_price',+this.value)"></div>
+        <div><label>인원</label><select onchange="setv(${i},'adults',+this.value)">${[1,2,3,4,5,6].map(x=>opt(x,`성인 ${x}명`,a.adults||1)).join('')}</select></div>
+      </div>
+      <div class="row">
+        <div><label>수하물 (요금 포함 가격)</label><select onchange="setv(${i},'baggage',this.value)">
+          ${opt('none','없음',a.baggage)}${opt('carry','기내 1개',a.baggage)}${opt('checked','위탁 1개',a.baggage)}${opt('checked2','위탁 2개',a.baggage)}</select></div>
+        <div><label>경유</label><select onchange="setv(${i},'max_stops',this.value===''?null:+this.value)">
+          ${opt('','상관없음',a.max_stops??'')}${opt(0,'직항만',a.max_stops??'')}${opt(1,'1회 이하',a.max_stops??'')}</select></div>
+      </div>
+      <label>가는 날 출발 시간</label>
+      <div class="row"><select onchange="setHour(${i},'depart_hours',0,this.value)">${hourOptions(dh[0])}</select>
+        <select onchange="setHour(${i},'depart_hours',1,this.value)">${hourOptions(dh[1])}</select></div>
+      ${a.trip==='one-way' ? '' : `<label>오는 날 출발 시간</label>
+      <div class="row"><select onchange="setHour(${i},'return_hours',0,this.value)">${hourOptions(rh[0])}</select>
+        <select onchange="setHour(${i},'return_hours',1,this.value)">${hourOptions(rh[1])}</select></div>`}
+      <details><summary class="muted" style="margin-top:10px">더보기 (항공사, 좌석, 삭제)</summary>
+        <label>항공사 코드 (쉼표로 구분, 비우면 전체)</label>
+        <input value="${esc((a.airlines||[]).join(', '))}" oninput="setv(${i},'airlines',this.value.split(',').map(s=>s.trim().toUpperCase()).filter(Boolean))" placeholder="KE, OZ, 7C">
+        <label>좌석</label><select onchange="setv(${i},'seat',this.value)">
+          ${opt('economy','일반석',a.seat)}${opt('premium-economy','프리미엄 일반석',a.seat)}${opt('business','비즈니스',a.seat)}${opt('first','일등석',a.seat)}</select>
+        <p><button onclick="removeAlert(${i})">이 알림 삭제</button></p>
+      </details>
+      ${resultHtml(r)}
+    </div>`;
+  }).join('') || '<p class="muted">알림이 없어요. 아래에서 추가하세요.</p>';
+}
+
+function resultHtml(r) {
+  if (!r) return '<div class="res muted">아직 검색 결과가 없어요.</div>';
+  let h = '<div class="res">';
+  if (r.cheapest) h += `가격 빼고 조건에 맞는 현재 최저가: <b>${won(r.cheapest.price)}</b> (${r.cheapest.dep}${r.cheapest.ret?' ~ '+r.cheapest.ret:''}, ${esc(r.cheapest.airlines)}) <a href="${r.cheapest.link}" target="_blank">구글</a>`;
+  else h += '<span class="muted">조건에 맞는 항공편이 없어요.</span>';
+  if (r.found && r.found.length) {
+    h += '<ul>' + r.found.map(f => `<li><b>${won(f.price)}</b> ${f.dep}${f.ret?' ~ '+f.ret:''} ${esc(f.airlines)}<br><span class="muted">${esc(f.detail)}</span> <a href="${f.link}" target="_blank">구글</a> · <a href="${f.naver}" target="_blank">네이버</a></li>`).join('') + '</ul>';
+  }
+  h += `<div class="muted">이번 검색 ${r.searched}개${r.pending?`, 다음 차례 ${r.pending}개`:''}${r.errors?`, 실패 ${r.errors}개`:''}</div></div>`;
+  return h;
+}
+
+function esc(s) { return String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function setv(i, k, v, rerender) { alerts[i][k] = v; if (rerender) render(); }
+function toggleDay(i, d) {
+  const s = new Set(alerts[i].trip_days || []);
+  s.has(d) ? s.delete(d) : s.add(d);
+  alerts[i].trip_days = [...s].sort((a,b)=>a-b); render();
+}
+function setHour(i, k, idx, v) {
+  const h = alerts[i][k] || [null, null];
+  h[idx] = v === '' ? null : +v;
+  alerts[i][k] = (h[0] === null && h[1] === null) ? null : h;
+}
+function addAlert() {
+  const t = new Date(); t.setDate(t.getDate()+30);
+  const e = new Date(t); e.setDate(e.getDate()+30);
+  const iso = d => d.toISOString().slice(0,10);
+  alerts.push({ name: `새 알림 ${alerts.length+1}`, origin: 'ICN', destination: '', trip: 'round-trip',
+    window_from: iso(t), window_to: iso(e), trip_days: [3,4], max_price: 300000, adults: 1, baggage: 'none',
+    max_stops: null, depart_hours: null, return_hours: null, airlines: [], seat: 'economy', active: true });
+  render();
+}
+function removeAlert(i) { if (confirm('이 알림을 삭제할까요? (저장해야 반영돼요)')) { alerts.splice(i,1); render(); } }
+
+function validate() {
+  const names = new Set();
+  for (const a of alerts) {
+    if (!a.name.trim()) return '알림 이름을 넣어주세요.';
+    if (names.has(a.name)) return `알림 이름이 겹쳐요: ${a.name}`;
+    names.add(a.name);
+    if (!/^[A-Z]{3}$/.test(a.origin) || !/^[A-Z]{3}$/.test(a.destination)) return `${a.name}: 공항은 영문 3글자 코드로 넣어주세요 (예: ICN, NRT).`;
+    if (!a.window_from || !a.window_to || a.window_from > a.window_to) return `${a.name}: 검색 기간을 확인해주세요.`;
+    if (a.trip !== 'one-way' && !(a.trip_days||[]).length) return `${a.name}: 여행 일수를 하나 이상 골라주세요.`;
+    if (!(a.max_price > 0)) return `${a.name}: 최대 가격을 넣어주세요.`;
+  }
+  return null;
+}
+
+async function save() {
+  const err = validate();
+  if (err) { msg(err, 'bad'); return; }
+  msg('저장 중...');
+  try {
+    const content = JSON.stringify({ alerts }, null, 1) + '\n';
+    const res = await api('contents/alerts.json', { method: 'PUT', body: JSON.stringify({
+      message: '휴대폰에서 알림 조건 변경', content: b64encode(content), sha, branch: 'main' }) });
+    sha = res.content.sha;
+    msg('저장했어요. 몇 분 안에 검색이 시작되고, 조건에 맞으면 알림이 와요.', 'ok');
+  } catch (e) {
+    msg('저장 실패: ' + e.message + (e.message.startsWith('409') ? ' (다른 곳에서 바뀌었어요. 새로고침 후 다시 저장하세요)' : ''), 'bad');
+  }
+}
+
+load();
+</script>
+</body>
+</html>
