@@ -1,18 +1,18 @@
 {
- "updated": "2026-10-12 17:26",
+ "updated": "2026-10-12 19:02",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2027-01-10",
-    "ret": "2027-01-13",
-    "price": 404100,
-    "total": 1616400,
-    "airlines": "에어부산",
-    "detail": "ICN 07:35 → NRT 10:15 · 직항 · 비행 2시간 40분",
-    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTAoAEAHSA1qBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTEzKABADEgTagUSA05SVHIFEgNJQ05CBAEBAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "dep": "2027-01-15",
+    "ret": "2027-01-18",
+    "price": 401700,
+    "total": 1606800,
+    "airlines": "제주항공",
+    "detail": "ICN 14:50 → NRT 17:15 · 직항 · 비행 2시간 25분",
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTUoAEAHSA9qBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTE4KABADEgTagUSA05SVHIFEgNJQ05CBAEBAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
   }
