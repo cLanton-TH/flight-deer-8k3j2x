@@ -4,7 +4,20 @@
 조건에 맞는 항공편이 새로 나오거나 더 싸지면 휴대폰으로 구글·네이버 항공권 링크와 함께 알림을 보냅니다.
 서버나 켜둔 컴퓨터가 필요 없고, 조건은 휴대폰 설정 페이지에서 바꿉니다.
 
-## 처음 설정 (한 번만)
+## 내 것으로 만들어 쓰기 (친구용, 5분)
+GitHub 계정만 있으면 됩니다. 서버나 PC는 필요 없어요.
+
+1. 이 저장소 오른쪽 위 **Use this template** → **Create a new repository** → 이름 아무거나, **Public** → Create.
+   (버튼이 안 보이면 **Fork**로 만든 뒤, 내 저장소의 **Actions** 탭에서 워크플로 사용을 켜주세요)
+2. 휴대폰에 **ntfy** 앱 설치 → `+` → 남이 추측하기 어려운 토픽 이름 구독 (예: `flight-minsu-7q2k9z`).
+3. 내 저장소 → **Settings** → **Secrets and variables** → **Actions** → **New repository secret** → Name `NTFY_TOPIC`, 값은 2번 토픽 이름.
+4. 내 저장소 → **Settings** → **Pages** → Branch `main`, 폴더 `/docs` → Save.
+5. https://github.com/settings/personal-access-tokens/new 에서 토큰 생성: Repository access는 **Only select repositories**로 내 저장소만, Permissions에서 **Contents: Read and write**.
+6. 휴대폰으로 `https://<내아이디>.github.io/<내저장소이름>/` 접속 → 연결 설정에 토큰 붙여넣기 → 기존 예시 알림을 내 조건으로 고치고 **저장하고 바로 검색**.
+
+이후 매시간 자동 검색하고, 조건에 맞는 항공편이 나오면 휴대폰으로 알림이 옵니다.
+
+## 처음 설정 (직접 PC에서 올리는 경우)
 
 ### 1. 휴대폰 알림 앱 준비 (ntfy)
 1. 휴대폰에 **ntfy** 앱 설치 (Play 스토어 / App Store).
