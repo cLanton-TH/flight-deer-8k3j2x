@@ -1,18 +1,18 @@
 {
- "updated": "2026-10-26 09:23",
+ "updated": "2026-10-26 14:22",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2027-01-19",
-    "ret": "2027-01-22",
-    "price": 403600,
-    "total": 1614400,
+    "dep": "2027-01-09",
+    "ret": "2027-01-12",
+    "price": 403000,
+    "total": 806000,
     "airlines": "에어프레미아",
     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
-    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTIyKABADEgTagUSA05SVHIFEgNJQ05CBAEBAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMDkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTEyKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
    "found": []
   }
