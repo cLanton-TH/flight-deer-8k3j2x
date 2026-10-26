@@ -25,6 +25,32 @@
    "airlines": [],
    "seat": "economy",
    "active": true
+  },
+  {
+   "name": "오사카",
+   "origin": "ICN",
+   "destination": "KIX",
+   "trip": "round-trip",
+   "window_from": "2026-12-31",
+   "window_to": "2027-01-31",
+   "trip_days": [
+    4
+   ],
+   "max_price": 320000,
+   "adults": 2,
+   "baggage": "checked",
+   "max_stops": null,
+   "depart_hours": [
+    7,
+    12
+   ],
+   "return_hours": [
+    14,
+    19
+   ],
+   "airlines": [],
+   "seat": "economy",
+   "active": true
   }
  ]
 }
