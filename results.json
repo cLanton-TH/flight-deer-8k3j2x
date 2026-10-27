@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-27 19:34",
+ "updated": "2026-10-28 01:39",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
@@ -23,8 +23,8 @@
    "cheapest": {
     "dep": "2027-01-02",
     "ret": "2027-01-05",
-    "price": 353900,
-    "total": 707800,
+    "price": 353800,
+    "total": 707600,
     "airlines": "제주항공",
     "detail": "ICN 08:05 → KIX 09:50 · 직항 · 비행 1시간 45분",
     "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
