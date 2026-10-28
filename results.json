@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-28 17:30",
+ "updated": "2026-10-29 01:02",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
@@ -8,24 +8,13 @@
    "cheapest": {
     "dep": "2027-01-18",
     "ret": "2027-01-21",
-    "price": 371300,
-    "total": 742600,
+    "price": 401300,
+    "total": 802600,
     "airlines": "에어프레미아",
     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTgoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTIxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
-   "found": [
-    {
-     "dep": "2027-01-18",
-     "ret": "2027-01-21",
-     "price": 371300,
-     "total": 742600,
-     "airlines": "에어프레미아",
-     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
-     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTgoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTIxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW",
-     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20270118/NRT-ICN-20270121?adult=2&fareType=Y"
-    }
-   ]
+   "found": []
   },
   "오사카": {
    "searched": 29,
@@ -34,8 +23,8 @@
    "cheapest": {
     "dep": "2027-01-02",
     "ret": "2027-01-05",
-    "price": 337800,
-    "total": 675600,
+    "price": 337700,
+    "total": 675400,
     "airlines": "제주항공",
     "detail": "ICN 08:05 → KIX 09:50 · 직항 · 비행 1시간 45분",
     "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
