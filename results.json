@@ -1,33 +1,44 @@
 {
- "updated": "2026-10-28 10:22",
+ "updated": "2026-10-28 17:30",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2026-12-29",
-    "ret": "2027-01-01",
-    "price": 385000,
-    "total": 770000,
-    "airlines": "제주항공",
-    "detail": "ICN 08:35 → NRT 11:05 · 직항 · 비행 2시간 30분",
-    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTItMjkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTAxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
+    "dep": "2027-01-18",
+    "ret": "2027-01-21",
+    "price": 371300,
+    "total": 742600,
+    "airlines": "에어프레미아",
+    "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTgoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTIxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
-   "found": []
+   "found": [
+    {
+     "dep": "2027-01-18",
+     "ret": "2027-01-21",
+     "price": 371300,
+     "total": 742600,
+     "airlines": "에어프레미아",
+     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
+     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTgoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTIxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW",
+     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20270118/NRT-ICN-20270121?adult=2&fareType=Y"
+    }
+   ]
   },
   "오사카": {
    "searched": 29,
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2027-01-26",
-    "ret": "2027-01-29",
-    "price": 350400,
-    "total": 700800,
-    "airlines": "피치항공",
-    "detail": "ICN 07:30 → KIX 09:15 · 직항 · 비행 1시간 45분",
-    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMjZAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0yOUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "dep": "2027-01-02",
+    "ret": "2027-01-05",
+    "price": 337800,
+    "total": 675600,
+    "airlines": "제주항공",
+    "detail": "ICN 08:05 → KIX 09:50 · 직항 · 비행 1시간 45분",
+    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
   }
