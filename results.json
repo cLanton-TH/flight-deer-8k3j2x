@@ -1,43 +1,32 @@
 {
- "updated": "2026-10-30 04:43",
+ "updated": "2026-10-30 08:58",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
    "pending": 0,
-   "errors": 0,
+   "errors": 16,
    "cheapest": {
-    "dep": "2027-01-17",
-    "ret": "2027-01-20",
-    "price": 371900,
-    "total": 743800,
-    "airlines": "에어프레미아",
-    "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
-    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTcoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTIwKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
+    "dep": "2027-01-09",
+    "ret": "2027-01-12",
+    "price": 421500,
+    "total": 843000,
+    "airlines": "제주항공",
+    "detail": "ICN 07:15 → NRT 09:40 · 직항 · 비행 2시간 25분",
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMDkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTEyKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
-   "found": [
-    {
-     "dep": "2027-01-17",
-     "ret": "2027-01-20",
-     "price": 371900,
-     "total": 743800,
-     "airlines": "에어프레미아",
-     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
-     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTcoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTIwKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW",
-     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20270117/NRT-ICN-20270120?adult=2&fareType=Y"
-    }
-   ]
+   "found": []
   },
   "오사카": {
    "searched": 29,
    "pending": 0,
-   "errors": 0,
+   "errors": 20,
    "cheapest": {
     "dep": "2027-01-04",
     "ret": "2027-01-07",
     "price": 356300,
     "total": 712600,
     "airlines": "제주항공",
-    "detail": "ICN 09:10 → KIX 11:00 · 직항 · 비행 1시간 50분",
+    "detail": "ICN 10:15 → KIX 12:05 · 직항 · 비행 1시간 50분",
     "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDRAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wN0AOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
