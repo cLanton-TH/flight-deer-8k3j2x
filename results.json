@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-30 21:54",
+ "updated": "2026-10-31 03:38",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
@@ -21,13 +21,13 @@
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2027-01-13",
-    "ret": "2027-01-16",
-    "price": 354400,
-    "total": 708800,
-    "airlines": "피치항공",
-    "detail": "ICN 07:30 → KIX 09:15 · 직항 · 비행 1시간 45분",
-    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMTNAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0xNkAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "dep": "2027-01-02",
+    "ret": "2027-01-05",
+    "price": 355300,
+    "total": 710600,
+    "airlines": "제주항공",
+    "detail": "ICN 09:10 → KIX 11:00 · 직항 · 비행 1시간 50분",
+    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
   }
