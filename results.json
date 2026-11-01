@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-01 15:01",
+ "updated": "2026-11-01 22:22",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
@@ -8,10 +8,10 @@
    "cheapest": {
     "dep": "2026-12-29",
     "ret": "2027-01-01",
-    "price": 405100,
-    "total": 810200,
-    "airlines": "제주항공",
-    "detail": "ICN 08:35 → NRT 11:05 · 직항 · 비행 2시간 30분",
+    "price": 420300,
+    "total": 840600,
+    "airlines": "에어프레미아",
+    "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTItMjkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTAxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
    "found": []
@@ -21,13 +21,13 @@
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2027-01-04",
-    "ret": "2027-01-07",
-    "price": 376400,
-    "total": 752800,
+    "dep": "2027-01-02",
+    "ret": "2027-01-05",
+    "price": 386400,
+    "total": 772800,
     "airlines": "피치항공",
-    "detail": "ICN 07:30 → KIX 09:15 · 직항 · 비행 1시간 45분",
-    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDRAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wN0AOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "detail": "ICN 10:35 → KIX 12:20 · 직항 · 비행 1시간 45분",
+    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
   }
