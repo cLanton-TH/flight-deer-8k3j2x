@@ -1,6 +1,6 @@
 # 최근 검색 결과
 
-마지막 검색: 2026-11-01 22:22 (KST)
+마지막 검색: 2026-11-02 03:57 (KST)
 
 
 ## 도쿄 1월
@@ -8,7 +8,7 @@
 34개 날짜 검색, 조건에 맞는 날짜 0개, 새 알림 0개
 
 
-가격 빼고 조건에 맞는 현재 최저가: **420,300원** (2026-12-29 ~ 2027-01-01, 에어프레미아, ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분) [구글](https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTItMjkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTAxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW)
+가격 빼고 조건에 맞는 현재 최저가: **440,300원** (2027-01-22 ~ 2027-01-25, 에어프레미아, ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분) [구글](https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMjIoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTI1KABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW)
 
 
 ## 오사카
@@ -16,5 +16,5 @@
 29개 날짜 검색, 조건에 맞는 날짜 0개, 새 알림 0개
 
 
-가격 빼고 조건에 맞는 현재 최저가: **386,400원** (2027-01-02 ~ 2027-01-05, 피치항공, ICN 10:35 → KIX 12:20 · 직항 · 비행 1시간 45분) [구글](https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW)
+가격 빼고 조건에 맞는 현재 최저가: **385,900원** (2027-01-04 ~ 2027-01-07, 에어부산, ICN 09:05 → KIX 11:00 · 직항 · 비행 1시간 55분) [구글](https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDRAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wN0AOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW)
 
