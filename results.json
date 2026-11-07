@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-07 23:02",
+ "updated": "2026-11-08 03:48",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
@@ -23,8 +23,8 @@
    "cheapest": {
     "dep": "2027-01-02",
     "ret": "2027-01-05",
-    "price": 335000,
-    "total": 670000,
+    "price": 335400,
+    "total": 670800,
     "airlines": "에어서울",
     "detail": "ICN 07:15 → KIX 09:05 · 직항 · 비행 1시간 50분",
     "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
