@@ -1,44 +1,33 @@
 {
- "updated": "2026-11-10 03:49",
+ "updated": "2026-11-10 11:08",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2026-12-29",
-    "ret": "2027-01-01",
-    "price": 349900,
-    "total": 699800,
+    "dep": "2027-01-27",
+    "ret": "2027-01-30",
+    "price": 439900,
+    "total": 879800,
     "airlines": "에어프레미아",
     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
-    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTItMjkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTAxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMjcoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTMwKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
-   "found": [
-    {
-     "dep": "2026-12-29",
-     "ret": "2027-01-01",
-     "price": 349900,
-     "total": 699800,
-     "airlines": "에어프레미아",
-     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
-     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTItMjkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTAxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW",
-     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20261229/NRT-ICN-20270101?adult=2&fareType=Y"
-    }
-   ]
+   "found": []
   },
   "오사카": {
    "searched": 29,
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2027-01-02",
-    "ret": "2027-01-05",
-    "price": 334900,
-    "total": 669800,
-    "airlines": "에어서울",
-    "detail": "ICN 07:15 → KIX 09:05 · 직항 · 비행 1시간 50분",
-    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "dep": "2027-01-03",
+    "ret": "2027-01-06",
+    "price": 372700,
+    "total": 745400,
+    "airlines": "피치항공",
+    "detail": "ICN 10:35 → KIX 12:20 · 직항 · 비행 1시간 45분",
+    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDNAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNkAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
   }
