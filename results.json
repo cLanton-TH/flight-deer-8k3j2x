@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-12 12:00",
+ "updated": "2026-11-12 20:05",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
@@ -8,24 +8,13 @@
    "cheapest": {
     "dep": "2027-01-04",
     "ret": "2027-01-07",
-    "price": 365900,
-    "total": 731800,
+    "price": 380900,
+    "total": 761800,
     "airlines": "제주항공",
-    "detail": "ICN 08:25 → NRT 10:50 · 직항 · 비행 2시간 25분",
+    "detail": "ICN 08:10 → NRT 10:35 · 직항 · 비행 2시간 25분",
     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMDQoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTA3KABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
-   "found": [
-    {
-     "dep": "2027-01-04",
-     "ret": "2027-01-07",
-     "price": 365900,
-     "total": 731800,
-     "airlines": "제주항공",
-     "detail": "ICN 08:25 → NRT 10:50 · 직항 · 비행 2시간 25분",
-     "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMDQoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTA3KABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW",
-     "naver": "https://flight.naver.com/flights/international/ICN-NRT-20270104/NRT-ICN-20270107?adult=2&fareType=Y"
-    }
-   ]
+   "found": []
   },
   "오사카": {
    "searched": 29,
