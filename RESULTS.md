@@ -1,6 +1,6 @@
 # 최근 검색 결과
 
-마지막 검색: 2026-11-13 03:56 (KST)
+마지막 검색: 2026-11-13 09:22 (KST)
 
 
 ## 도쿄 1월
@@ -16,5 +16,5 @@
 29개 날짜 검색, 조건에 맞는 날짜 0개, 새 알림 0개
 
 
-가격 빼고 조건에 맞는 현재 최저가: **333,600원** (2027-01-02 ~ 2027-01-05, 에어서울, ICN 07:15 → KIX 09:05 · 직항 · 비행 1시간 50분) [구글](https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDJAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW)
+가격 빼고 조건에 맞는 현재 최저가: **375,200원** (2027-01-03 ~ 2027-01-06, 에어부산, ICN 09:05 → KIX 11:00 · 직항 · 비행 1시간 55분) [구글](https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDNAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNkAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW)
 
