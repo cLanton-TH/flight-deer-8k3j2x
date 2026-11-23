@@ -1,33 +1,33 @@
 {
- "updated": "2026-11-23 18:02",
+ "updated": "2026-11-24 06:22",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
    "pending": 0,
-   "errors": 0,
+   "errors": 1,
    "cheapest": {
-    "dep": "2026-12-28",
-    "ret": "2026-12-31",
-    "price": 420400,
-    "total": 840800,
+    "dep": "2027-01-10",
+    "ret": "2027-01-13",
+    "price": 431300,
+    "total": 862600,
     "airlines": "에어프레미아",
     "detail": "ICN 08:45 → NRT 11:20 · 직항 · 비행 2시간 35분",
-    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTItMjgoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI2LTEyLTMxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMTAoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTEzKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
    "found": []
   },
   "오사카": {
    "searched": 29,
    "pending": 0,
-   "errors": 2,
+   "errors": 0,
    "cheapest": {
-    "dep": "2026-12-31",
-    "ret": "2027-01-03",
-    "price": 526300,
-    "total": 1052600,
-    "airlines": "Trinity Airways",
-    "detail": "ICN 07:55 → KIX 09:55 · 직항 · 비행 2시간 0분",
-    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjYtMTItMzFAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wM0AOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "dep": "2027-01-26",
+    "ret": "2027-01-29",
+    "price": 384700,
+    "total": 769400,
+    "airlines": "피치항공",
+    "detail": "ICN 07:30 → KIX 09:15 · 직항 · 비행 1시간 45분",
+    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMjZAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0yOUAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
   }
