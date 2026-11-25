@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-25 21:52",
+ "updated": "2026-11-26 07:32",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
@@ -19,7 +19,7 @@
   "오사카": {
    "searched": 29,
    "pending": 0,
-   "errors": 1,
+   "errors": 0,
    "cheapest": {
     "dep": "2027-01-03",
     "ret": "2027-01-06",
