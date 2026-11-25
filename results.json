@@ -1,33 +1,33 @@
 {
- "updated": "2026-11-25 02:43",
+ "updated": "2026-11-25 11:27",
  "alerts": {
   "도쿄 1월": {
    "searched": 34,
    "pending": 0,
    "errors": 0,
    "cheapest": {
-    "dep": "2027-01-09",
-    "ret": "2027-01-12",
-    "price": 426000,
-    "total": 852000,
+    "dep": "2026-12-29",
+    "ret": "2027-01-01",
+    "price": 401000,
+    "total": 802000,
     "airlines": "에어서울",
-    "detail": "ICN 09:20 → NRT 11:50 · 직항 · 비행 2시간 30분",
-    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjctMDEtMDkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTEyKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
+    "detail": "ICN 08:10 → NRT 10:25 · 직항 · 비행 2시간 15분",
+    "link": "https://www.google.com/travel/flights/search?tfs=GiASCjIwMjYtMTItMjkoAEAHSAxqBRIDSUNOcgUSA05SVBogEgoyMDI3LTAxLTAxKABADEgTagUSA05SVHIFEgNJQ05CAgEBSAFqBBAAGAGIAQGYAQE=&hl=ko&curr=KRW"
    },
    "found": []
   },
   "오사카": {
    "searched": 29,
    "pending": 0,
-   "errors": 1,
+   "errors": 0,
    "cheapest": {
-    "dep": "2027-01-03",
-    "ret": "2027-01-06",
-    "price": 362700,
-    "total": 725400,
-    "airlines": "피치항공",
-    "detail": "ICN 07:30 → KIX 09:15 · 직항 · 비행 1시간 45분",
-    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMDNAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0wNkAOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
+    "dep": "2027-01-10",
+    "ret": "2027-01-13",
+    "price": 405700,
+    "total": 811400,
+    "airlines": "에어부산",
+    "detail": "ICN 12:40 → KIX 14:40 · 직항 · 비행 2시간 0분",
+    "link": "https://www.google.com/travel/flights/search?tfs=Gh4SCjIwMjctMDEtMTBAB0gMagUSA0lDTnIFEgNLSVgaHhIKMjAyNy0wMS0xM0AOSBNqBRIDS0lYcgUSA0lDTkICAQFIAWoEEAAYAYgBAZgBAQ==&hl=ko&curr=KRW"
    },
    "found": []
   }
